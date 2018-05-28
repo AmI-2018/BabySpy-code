@@ -1,3 +1,4 @@
+
 """
 Created on Apr 4, 2014
 Updated on May 16, 2018
@@ -47,6 +48,7 @@ if __name__ == '__main__':
             url_to_call = lights_url + light + '/state'
             body = '{ "on" : true, "effect" : "colorloop" }'
             body = '{"hue":65280}'
+            body = '{"hue":42256}'
             # to set the red color
             # body = '{ "hue" : 0 }'
             # more colors: https://www.developers.meethue.com/documentation/core-concepts

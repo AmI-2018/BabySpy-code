@@ -12,12 +12,12 @@
 
 EthernetClient client;
 
-// Name address for Raspberry Pi
+// IP address for Raspberry Pi
 //const char* server = "api.openweathermap.org";
-const char* server = "127.0.0.1:5000";
+const char* server = "127.0.0.1";
 
 // Replace with your unique URL resource(Asking for the specific data)
-const char* resource = "/command1";
+const char* resource = ":5000/command1";
 
 const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
@@ -25,7 +25,7 @@ const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
 // Check if using a local network whether mac address is correct!
 // Physical address (MAC): F4-30-B9-54-D6-F9
 // byte mac[] = {0xF4, 0x30, 0xB9, 0x54, 0xD6, 0xF9};
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+byte mac[] = {0xB4, 0x21, 0x8A, 0xF8, 0x3C, 0x5F};
 
 
 // The structure of data to be extracted from the JSON data

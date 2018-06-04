@@ -148,4 +148,5 @@ void disconnect() {
 // Pause for a one minute
 void wait() {
   delay(60000);
+  Serial.println();
 }

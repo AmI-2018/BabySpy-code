@@ -7,17 +7,19 @@
  */
 
 #include <ArduinoJson.h>
-#include <Ethernet.h>
+//#include <Ethernet.h> not valid for Arduino Yun
+#include <BridgeClient.h>
+#include <Bridge.h>
 #include <SPI.h>
-
-EthernetClient client;
 
 // IP address for Raspberry Pi
 //const char* server = "api.openweathermap.org";
-const char* server = "127.0.0.1";
+//const char* server = "169.254.0.2";
+//Trying new way to give server IP
+byte ip_server[]={169, 254, 0, 2};
 
 // Replace with your unique URL resource(Asking for the specific data)
-const char* resource = ":5000/command1";
+const char* resource = "/command1";
 
 const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
@@ -25,8 +27,10 @@ const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
 // Check if using a local network whether mac address is correct!
 // Physical address (MAC): F4-30-B9-54-D6-F9
 // byte mac[] = {0xF4, 0x30, 0xB9, 0x54, 0xD6, 0xF9};
-byte mac[] = {0xB4, 0x21, 0x8A, 0xF8, 0x3C, 0x5F};
+//byte mac[] = {0xB4, 0x21, 0x8A, 0xF8, 0x3C, 0x5F};
 
+// Giving the Arduino its IP address
+//IPAddress ip(169,254,0,1);
 
 // The structure of data to be extracted from the JSON data
 struct clientData {
@@ -45,19 +49,23 @@ void setup() {
   while (!Serial) {
     ;  // wait for serial port to initialize
   }
-  Serial.println("Serial ready");
-  if(!Ethernet.begin(mac)) {
-    Serial.println("Failed to configure Ethernet");
-    return;
-  }
+
+  Bridge.begin();
+
+  //New part, assign a static IP if DHCP fails
+  //if(!Ethernet.begin(mac) == 0){
+  //Ethernet.begin(mac,ip);
+  //}
+  
   Serial.println("Ethernet ready");
+  Serial.println();
   delay(1000);
 }
 
 // ARDUINO entry point #2: infinite loop
 void loop() {
-  if(connect(server)) {
-    if(sendRequest(server, resource) && skipResponseHeaders()) {
+  if(Connect(ip_server)) {
+    if(sendRequest(ip_server, resource) && skipResponseHeaders()) {
       clientData clientData;
       if(readReponseContent(&clientData)) {
         // Run the desired function which requires the data
@@ -65,34 +73,45 @@ void loop() {
       }
     }
   }
-  disconnect();
+  Disconnect();
   wait();
 }
 
 // Opens the connection to the HTTP server
-bool connect(const char* hostName) {
+bool Connect(byte hostName[]) {
   Serial.print("Connect to ");
-  Serial.println(hostName);
+  int i;
+  for(i=0;i<4;i++){
+    Serial.print(hostName[i]);
+    if(i<3){
+      Serial.print(".");
+    }
+  }
+  Serial.println();
 
-  bool ok = client.connect(hostName, 80);
+  //Connect to server code here:
 
-  Serial.println(ok ? "Connected" : "Connection Failed!");
+  
+  if(!ok){
+    Serial.println("Connection Failed!");
+  }
+  else{
+    Serial.println("Connected!");
+  }
   return ok;
 }
 
 // Send the HTTP GET request to the server
-bool sendRequest(const char* host, const char* resource) {
+bool sendRequest(byte host[], const char* resource) {
   Serial.print("GET ");
-  Serial.println(resource);
+  Serial.print(resource);
+  Serial.print(" HTTP/1.1");
+  Serial.println();
 
   client.print("GET ");
   client.print(resource);
   client.println(" HTTP/1.1");
-  client.print("Host: ");
-  client.println(host);
-  client.println("Connection: close");
-  client.println();
-
+  
   return true;
 }
 
@@ -156,12 +175,13 @@ void printclientData(const struct clientData* clientData) {
 
 
 // Close the connection with the HTTP server
-void disconnect() {
-  Serial.println("Disconnect");
+void Disconnect() {
+  Serial.println("Disconnecting");
   client.stop();
 }
 
 // Pause for a 1 minute
+// Start again after an empty line
 void wait() {
   Serial.println("Wait 60 seconds");
   delay(60000);

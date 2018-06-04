@@ -37,7 +37,7 @@ void loop() {
   HttpClient client;
 
   // Make a HTTP request:
-  client.get("http://169.254.30.2:8080/command1");
+  client.get("http://169.254.0.2:5000/command");
 
   // if there are incoming bytes available
   // from the server, read them and print them:

@@ -15,11 +15,11 @@ BridgeClient client;
 boolean Connected;
 
 // IP address for Raspberry Pi
-IPAddress ip(169, 254, 30, 2);
-const char* server = "http://169.254.30.2";
+IPAddress ip(169, 254, 0, 2);
+const char* server = "http://169.254.30.2:5000";
 
 // Replace with your unique URL resource(Asking for the specific data)
-const char* resource = "/command1";
+const char* resource = "/command";
 
 const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
@@ -40,7 +40,7 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   
-  Serial.begin(115200);
+  Serial.begin(9600);
   while(!Serial){
     //Waiting for Serial to start up
     digitalWrite(13, HIGH);
@@ -59,35 +59,43 @@ void setup() {
 void loop() {
 //New code must go in here
   if(!Connected){
-    client.connect(ip, 8080);
+    client.connect(ip, 5000);
     if(client.connected()){
-      Serial.print("Connecting to the server at:");
+      Serial.print("Connecting to the server at: ");
       Serial.println(ip);
+      Serial.println("-1");
       Connected = true;
     }
     else{
       Serial.println("Could not connect to server!");
+      Serial.println("-2");
       delay(5000);
     }
   }
   if(Connected){
     if(client.connected()){
+      Serial.println("-3");
       //Really connected send real data, delay to prevent too much data streaming
       delay(20);
-      while (client.available()){
+      //while (client.available()){
+        Serial.println("-4");
         if(sendRequest(server, resource) && skipResponseHeaders()) {
+          Serial.println("-5");
           clientData clientData;
           if(readReponseContent(&clientData)) {
+            Serial.println("-6");
             // Run the desired function which requires the data
             print_all(&clientData);
           }
         }
+        Serial.println("-7");
         wait();          
-      }
+      //}
     }
   }
   else{
     Serial.println("Server connection closed!");
+    Serial.println("End");
     client.stop();
     Serial.println();
     Connected = false;

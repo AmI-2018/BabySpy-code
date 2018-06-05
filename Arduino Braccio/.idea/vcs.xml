@@ -2,7 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Arduino Related Stuff/arduino-library-braccio" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Duplicate Server" vcs="Git" />
   </component>
 </project>

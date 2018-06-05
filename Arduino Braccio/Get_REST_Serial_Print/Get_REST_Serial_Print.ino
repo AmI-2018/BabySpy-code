@@ -138,7 +138,7 @@ bool skipResponseHeaders() {
 bool readReponseContent(struct clientData* clientData) {
   // Compute the optimal size of the JSON buffer according on the data to be parsed
   // Computing the size on: https://bblanchon.github.io/ArduinoJson/assistant/
-  const size_t bufferSize = JSON_OBJECT_SIZE(3);
+  const size_t bufferSize = JSON_OBJECT_SIZE(7) + 60;
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   JsonObject& root = jsonBuffer.parseObject(client);

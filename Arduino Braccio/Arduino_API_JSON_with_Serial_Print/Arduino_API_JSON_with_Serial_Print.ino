@@ -133,7 +133,7 @@ bool skipResponseHeaders() {
 bool readReponseContent(struct clientData* clientData) {
   // Compute the optimal size of the JSON buffer according on the data to be parsed
   // Computing the size on: https://bblanchon.github.io/ArduinoJson/assistant/
-  const size_t bufferSize = JSON_OBJECT_SIZE(3);
+  const size_t bufferSize = JSON_OBJECT_SIZE(7) + 60;
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   JsonObject& root = jsonBuffer.parseObject(client);
@@ -144,13 +144,13 @@ bool readReponseContent(struct clientData* clientData) {
   }
 
   // Copy the strings into the struct data from the JSONbuffer
-  strcpy(clientData->delay_time, root["main"]["delay_time"]);
-  strcpy(clientData->M1, root["main"]["M1"]);
-  strcpy(clientData->M1, root["main"]["M2"]);
-  strcpy(clientData->M3, root["main"]["M3"]);
-  strcpy(clientData->M4, root["main"]["M4"]);
-  strcpy(clientData->M5, root["main"]["M5"]);
-  strcpy(clientData->M6, root["main"]["M6"]);
+  strcpy(clientData->delay_time, root["delay_time"]);
+  strcpy(clientData->M1, root["M1"]);
+  strcpy(clientData->M2, root["M2"]);
+  strcpy(clientData->M3, root["M3"]);
+  strcpy(clientData->M4, root["M4"]);
+  strcpy(clientData->M5, root["M5"]);
+  strcpy(clientData->M6, root["M6"]);
 
   return true;
 }

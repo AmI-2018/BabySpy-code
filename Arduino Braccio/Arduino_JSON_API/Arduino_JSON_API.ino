@@ -6,13 +6,15 @@
  * Modified by Yeshitha Amarasekara
  */
 
+#include <Bridge.h>
+#include <BridgeClient.h>
 #include <ArduinoJson.h>
-#include <Ethernet.h>
 #include <Braccio.h>
 #include <Servo.h>
 #include <SPI.h>
 
-EthernetClient client;
+BridgeClient client;
+boolean Connected;
 Servo base;
 Servo shoulder;
 Servo elbow;
@@ -21,16 +23,14 @@ Servo wrist_rot;
 Servo gripper;
 
 // Name address for Raspberry Pi
-const char* server = "api.openweathermap.org";
+IPAddress ip(169, 254, 0, 2);
+const char* server = "http://169.254.30.2:5000";
 
 // Replace with your unique URL resource(Asking for the specific data)
-const char* resource = "REPLACE_WITH_YOUR_URL_RESOURCE";
+const char* resource = "/command";
 
 const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
-
-// Check if using a local network whether mac address is correct!
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 
 // The structure of data to be extracted from the JSON data
 struct clientData {
@@ -45,33 +45,60 @@ struct clientData {
 
 // Initialization
 void setup() {
-  Braccio.begin();
-  if(!Ethernet.begin(mac)) {
-    return;
+  pinMode(13, OUTPUT);
+  digitalWrite(13, HIGH);
+  
+  Serial.begin(9600);
+  while(!Serial){
+    //Waiting for Serial to start up
+    digitalWrite(13, HIGH);
+    delay(500);
+    digitalWrite(13, LOW);
+    delay(500);  
   }
-  delay(1000);
+  Bridge.begin();
+
+  Connected = false;
 }
 
 // ARDUINO entry point #2: infinite loop
 void loop() {
-  if(connect(server)) {
-    if(sendRequest(server, resource) && skipResponseHeaders()) {
-      clientData clientData;
-      if(readReponseContent(&clientData)) {
-        // Run the desired function which requires the data
-        Braccio_move(&clientData);
-      }
+//New code must go in here
+  if(!Connected){
+    client.connect(ip, 5000);
+    if(client.connected()){
+      Serial.print("Connecting to the server at: ");
+      Serial.println(ip);
+      Connected = true;
+    }
+    else{
+      Serial.println("Could not connect to server!");
+      delay(200);
     }
   }
-  disconnect();
-  wait();
+  if(Connected){
+    if(client.connected()){
+      //Really connected send real data, delay to prevent too much data streaming
+      if(sendRequest(server, resource) && skipResponseHeaders()) {
+        clientData clientData;
+        if(readReponseContent(&clientData)) {
+          // Run the desired function which requires the data
+          Braccio_move(&clientData);
+        }
+      }
+      wait();          
+    }
+  }
+  else{
+    Serial.println("Server connection closed!");
+    client.stop();
+    Serial.println();
+    Connected = false;
+  }
+
+//void loop closes here
 }
 
-// Opens the connection to the HTTP server
-bool connect(const char* hostName) {
-  bool ok = client.connect(hostName, 80);
-  return ok;
-}
 
 // Send the HTTP GET request to the server
 bool sendRequest(const char* host, const char* resource) {
@@ -96,6 +123,7 @@ bool skipResponseHeaders() {
   bool ok = client.find(endOfHeaders);
 
   if (!ok) {
+    Serial.println("No response or invalid response!");
   }
   
   return ok;
@@ -105,7 +133,7 @@ bool skipResponseHeaders() {
 bool readReponseContent(struct clientData* clientData) {
   // Compute the optimal size of the JSON buffer according on the data to be parsed
   // Computing the size on: https://bblanchon.github.io/ArduinoJson/assistant/
-  const size_t bufferSize = JSON_OBJECT_SIZE(3);
+  const size_t bufferSize = JSON_OBJECT_SIZE(7) + 60;
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   JsonObject& root = jsonBuffer.parseObject(client);
@@ -115,13 +143,13 @@ bool readReponseContent(struct clientData* clientData) {
   }
 
   // Copy the strings into the struct data from the JSONbuffer
-  strcpy(clientData->delay_time, root["main"]["delay_time"]);
-  strcpy(clientData->M1, root["main"]["M1"]);
-  strcpy(clientData->M1, root["main"]["M2"]);
-  strcpy(clientData->M3, root["main"]["M3"]);
-  strcpy(clientData->M4, root["main"]["M4"]);
-  strcpy(clientData->M5, root["main"]["M5"]);
-  strcpy(clientData->M6, root["main"]["M6"]);
+  strcpy(clientData->delay_time, root["delay_time"]);
+  strcpy(clientData->M1, root["M1"]);
+  strcpy(clientData->M1, root["M2"]);
+  strcpy(clientData->M3, root["M3"]);
+  strcpy(clientData->M4, root["M4"]);
+  strcpy(clientData->M5, root["M5"]);
+  strcpy(clientData->M6, root["M6"]);
 
   return true;
 }
@@ -136,17 +164,12 @@ void Braccio_move(const struct clientData* clientData) {
   int Servo5 = atoi(clientData->delay_time);
   int Servo6 = atoi(clientData->delay_time);
   Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);
-  //Check if the fllow delay is really neccessary
-  delay(100);
-}
-
-// Close the connection with the HTTP server
-void disconnect() {
-  client.stop();
+  //Check if the following delay is long enough for arm to now and recieve a new command
+  delay(200);
 }
 
 // Pause for a one minute
 void wait() {
-  delay(60000);
+  delay(5000);
   Serial.println();
 }

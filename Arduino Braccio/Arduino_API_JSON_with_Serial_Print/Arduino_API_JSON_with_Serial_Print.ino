@@ -19,7 +19,7 @@
 byte ip_server[]={169, 254, 0, 2};
 
 // Replace with your unique URL resource(Asking for the specific data)
-const char* resource = "/command1";
+const char* resource = "/command";
 
 const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
@@ -30,7 +30,7 @@ const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
 //byte mac[] = {0xB4, 0x21, 0x8A, 0xF8, 0x3C, 0x5F};
 
 // Giving the Arduino its IP address
-//IPAddress ip(169,254,0,1);
+//IPAddress ip(169,254,0,2);
 
 // The structure of data to be extracted from the JSON data
 struct clientData {
@@ -184,7 +184,7 @@ void Disconnect() {
 // Start again after an empty line
 void wait() {
   Serial.println("Wait 60 seconds");
-  delay(60000);
+  delay(20);
   Serial.println();
 }
 

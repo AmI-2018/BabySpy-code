@@ -27,7 +27,7 @@ void setup() {
   Bridge.begin();
   digitalWrite(13, HIGH);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   while (!Serial); // wait for a serial connection
 }
@@ -35,16 +35,20 @@ void setup() {
 void loop() {
   // Initialize the client library
   HttpClient client;
+  Serial.println(1);
 
   // Make a HTTP request:
   client.get("http://169.254.0.2:5000/command");
+  Serial.println(2);
 
   // if there are incoming bytes available
   // from the server, read them and print them:
-  while (client.available()) {
+  //while (client.available()) {
+    Serial.println(3);
     char c = client.read();
     Serial.print(c);
-  }
+    Serial.println(4);
+  //}
   Serial.flush();
 
   delay(5000);

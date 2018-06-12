@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d32b1310-f88e-4e64-946f-831504b16632" name="Default" comment="Commiting all the remaining arduino files">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d32b1310-f88e-4e64-946f-831504b16632" name="Default" comment="Created folders for the main program and the VLC api player" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -237,7 +235,21 @@
       <option name="project" value="LOCAL" />
       <updated>1528843313290</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Created folders for the main program and the VLC api player">
+      <created>1528843555978</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1528843555978</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Created folders for the main program and the VLC api player">
+      <created>1528843602303</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1528843602303</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -293,7 +305,8 @@
     <MESSAGE value="Cleaning up the extra Arduino Skteches" />
     <MESSAGE value="Commiting all the remaining arduino files" />
     <MESSAGE value="Commiting remainig files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commiting remainig files" />
+    <MESSAGE value="Created folders for the main program and the VLC api player" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created folders for the main program and the VLC api player" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Arduino Braccio/Duplicate Server/app.py" />

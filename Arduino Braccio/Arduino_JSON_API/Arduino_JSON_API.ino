@@ -164,7 +164,7 @@ void Braccio_move(const struct clientData* clientData) {
   int Servo5 = atoi(clientData->delay_time);
   int Servo6 = atoi(clientData->delay_time);
   Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);
-  //Check if the following delay is long enough for arm to now and recieve a new command
+  //Check if the following delay is long enough for arm to move and recieve a new command
   delay(200);
 }
 

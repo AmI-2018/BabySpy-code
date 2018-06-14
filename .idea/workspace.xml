@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d32b1310-f88e-4e64-946f-831504b16632" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Code.iml" afterPath="$PROJECT_DIR$/.idea/Code.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -188,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528992600694</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="this is the new videoplayer">
+      <created>1528992847429</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1528992847429</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -233,7 +238,8 @@
     <MESSAGE value="Created folders for the main program and the VLC api player" />
     <MESSAGE value="Updated the BabySpy Code repository" />
     <MESSAGE value="this is the videoplayer" />
-    <option name="LAST_COMMIT_MESSAGE" value="this is the videoplayer" />
+    <MESSAGE value="this is the new videoplayer" />
+    <option name="LAST_COMMIT_MESSAGE" value="this is the new videoplayer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

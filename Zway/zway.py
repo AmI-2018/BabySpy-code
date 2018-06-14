@@ -1,4 +1,4 @@
-import rest
+from Zway import rest
 import time
 
 #base url of the ZWave API
@@ -6,6 +6,9 @@ base_url = 'http://192.168.0.202:8083'
 device_url = base_url + '/ZWaveAPI/Run/devices[{}].instances[{}].commandClasses[{}]'
 #useful command classes
 comm_classes = {"sensor_multi": '49', "sensor_binary": '48'}
+# user credentials
+username = ''
+password = ''
 
 
 def connect():
@@ -14,9 +17,6 @@ def connect():
     and get the list of all devices connected to it
     :return: list of all devices connected to the controller
     """
-    #user credentials
-    username = ''
-    password = ''
 
     #get z-wave devices
     all_devices = rest.send(url=base_url+'/ZWaveAPI/Data/0', auth=(username, password))
@@ -41,3 +41,4 @@ def set_device(all_devices, device_key, command, value):
             if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
                 #turn it on (255)
                 url_to_call = (device_url + '.Set(255)').format(device_key, instance, comm_classes[command])
+                rest.send(url=url_to_call, auth=(username,password))

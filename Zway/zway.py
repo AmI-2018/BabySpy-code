@@ -31,14 +31,23 @@ def set_device(all_devices, device_key, command, value):
     """
     Turn the selected device on or off
     :param device_key: the key of the device required
-    :param command_class: which type of interface to act on
+    :param command: which type of interface to act on
     :param value: true for getting on, false for getting off
     :return:
     """
     if all_devices[device_key] is not None:
         instances = all_devices[device_key]['instances']
-        for instance in instances:
-            if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
-                #turn it on (255)
-                url_to_call = (device_url + '.Set(255)').format(device_key, instance, comm_classes[command])
-                rest.send(url=url_to_call, auth=(username,password))
+        if value:
+            for instance in instances:
+                if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
+                    #turn it on (255)
+                    url_to_call = (device_url + '.Set(255)').format(device_key, instance, comm_classes[command])
+                    rest.send(url=url_to_call, auth=(username,password))
+        else:
+            for instance in instances:
+                if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
+                    #turn it off (0)
+                    url_to_call = (device_url + '.Set(0)').format(device_key, instance, comm_classes[command])
+                    rest.send(url=url_to_call, auth=(username,password))
+
+

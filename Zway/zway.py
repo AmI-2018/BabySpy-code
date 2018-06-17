@@ -15,7 +15,7 @@ def connect():
     """
     The function initializes the connection to the z-wave controller
     and get the list of all devices connected to it
-    :return: list of all devices connected to the controller
+    :return: list of all devices connected to the controller, exluded the latter
     """
 
     #get z-wave devices
@@ -27,7 +27,7 @@ def connect():
     return all_devices
 
 
-def set_device(all_devices, device_key, command, value):
+def set_devices(all_devices, value):
     """
     Turn the selected device on or off
     :param device_key: the key of the device required
@@ -35,19 +35,56 @@ def set_device(all_devices, device_key, command, value):
     :param value: true for getting on, false for getting off
     :return:
     """
-    if all_devices[device_key] is not None:
-        instances = all_devices[device_key]['instances']
-        if value:
-            for instance in instances:
-                if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
-                    #turn it on (255)
-                    url_to_call = (device_url + '.Set(255)').format(device_key, instance, comm_classes[command])
-                    rest.send(url=url_to_call, auth=(username,password))
-        else:
-            for instance in instances:
-                if comm_classes[command] in all_devices[device_key]['instances'][instance]['commandClasses']:
-                    #turn it off (0)
-                    url_to_call = (device_url + '.Set(0)').format(device_key, instance, comm_classes[command])
-                    rest.send(url=url_to_call, auth=(username,password))
+    for device_key in all_devices:
+        if all_devices[device_key] is not None:
+            instances = all_devices[device_key]['instances']
+            if value:
+                for instance in instances:
+                    for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
+                        #turn it on (255)
+                        url_to_call = (device_url + '.Set(255)').format(device_key, instance, command_class)
+                        rest.send(url=url_to_call, auth=(username,password))
+            else:
+                for instance in instances:
+                    for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
+                        #turn it off (0)
+                        url_to_call = (device_url + '.Set(0)').format(device_key, instance, command_class)
+                        rest.send(url=url_to_call, auth=(username,password))
 
 
+def get_value(all_devices, device_key, instance):
+    """
+    :param all_devices: the list of the devices of the system
+    :param device_key: the device which we need to access information from
+    :param instance: the particular instance of the device we are retrieving information from
+    :return: all the values of the different classes the device support, joined inside a list
+    """
+    if all_devices[device_key]['instances'][instance] is not None:
+        data = list()
+        if comm_classes["sensor_multi"] in all_devices[device_key]['instances'][instance]['commandClasses']:
+            url_to_call = device_url.format(device_key, instance, comm_classes["sensor_multi"])
+            response = rest.send(url=url_to_call, auth=(username,password))
+            data.append(response['data']['3']['val']['value'])
+        if comm_classes["sensor_binary"] in all_devices[device_key]['instances'][instance]['commandClasses']:
+            url_to_call = device_url.format(device_key, instance, comm_classes["sensor_binary"])
+            response = rest.send(url=url_to_call, auth=(username,password))
+            data.append(response['data']['1']['level']['value'])
+    else:
+        data = None
+    return data
+
+
+def get_values(all_devices, device_key):
+    """
+    :param all_devices: the list of the devices of the system
+    :param device_key: the device which we need to access information from
+    :return: the collection of all the values of all classes of the all instances of that device as a list
+    """
+    data = list()
+    for instance in all_devices[device_key]['instances']:
+        value = get_value(all_devices, device_key, instance)
+        if value is not None:
+            data.append(value)
+    if len(data)==0:
+        data = None
+    return data

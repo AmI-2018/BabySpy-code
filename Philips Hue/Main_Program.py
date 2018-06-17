@@ -12,15 +12,28 @@
 
 if __name__ == '__main__':
 
-  jason = 1
-  wave_url = jason #+ '/api/'
+  jason = 'true'
+  while jason == 'true':
 
-  if wave_url is 1:
-    import test_flashing
-    test_flashing.light()
-  else:
-      print ("Safe Condition")
+    wave_url = jason #+ '/api/'
 
+    if wave_url is 'true':
+      import test_flashing
+      test_flashing.light()
+    else:
+        print ("Safe Condition")
+
+  while jason == 'true':
+
+    wave_url = jason + '/api/'
+
+    if wave_url is 'true':
+      import Arsuino_JASON_API
+      #function
+
+      test_flashing.light()
+    else:
+      print("Safe Condition")
 
 
 

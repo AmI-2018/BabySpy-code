@@ -8,7 +8,6 @@
 
 #include <BridgeClient.h>
 #include <Bridge.h>
-//#include <HttpClient.h>
 #include <ArduinoJson.h>
 #include <SPI.h>
 
@@ -142,21 +141,27 @@ bool readReponseContent(struct clientData* clientData) {
 
 // Print the parsed data
 void print_all(const struct clientData* clientData) {
-  Serial.print("Delay_time = ");
-  Serial.println(clientData->delay_time);
-  Serial.print("M1 = ");
-  Serial.println(clientData->M1);
-  Serial.print("M2 = ");
-  Serial.println(clientData->M2);
-  Serial.print("M3 = ");
-  Serial.println(clientData->M3);
-  Serial.print("M4 = ");
-  Serial.println(clientData->M4);
-  Serial.print("M5 = ");
-  Serial.println(clientData->M5);
-  Serial.print("M6 = ");
-  Serial.println(clientData->M6);
-  Serial.println();
+  int delay_time = atoi(clientData->delay_time);
+  if(delay_time == 0){
+    Serial.println("Data not modified!");
+  }
+  else{
+    Serial.print("Delay_time = ");
+    Serial.println(clientData->delay_time);
+    Serial.print("M1 = ");
+    Serial.println(clientData->M1);
+    Serial.print("M2 = ");
+    Serial.println(clientData->M2);
+    Serial.print("M3 = ");
+    Serial.println(clientData->M3);
+    Serial.print("M4 = ");
+    Serial.println(clientData->M4);
+    Serial.print("M5 = ");
+    Serial.println(clientData->M5);
+    Serial.print("M6 = ");
+    Serial.println(clientData->M6);
+    Serial.println();
+  }
 }
 
 // Pause for a one minute

@@ -28,7 +28,7 @@ if __name__ == '__main__':
     wave_url = jason + '/api/'
 
     if wave_url is 'true':
-      import Arsuino_JASON_API
+      import Arduino_JASON_API
       #function
 
       test_flashing.light()

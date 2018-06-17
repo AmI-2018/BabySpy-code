@@ -7,7 +7,8 @@
 import rest
 import time
 
-if __name__ == '__main__':
+def light():
+
 
     # the base URL
     base_url = 'http://192.168.0.201'
@@ -28,7 +29,7 @@ if __name__ == '__main__':
     colors = [0, 12750, 25500, 46920, 56100, 65280]
     for color in colors:
         #Flashing
-        for alert in range (0,2):
+        for alert in range (0,1):
             if type(all_the_lights) is dict:
                     # iterate over the Hue lights, turn them on with the color loop effect
                     light = '8'

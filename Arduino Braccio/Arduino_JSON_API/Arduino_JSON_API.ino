@@ -6,6 +6,16 @@
  * Modified by Yeshitha Amarasekara
  */
 
+ /*
+  Step Delay: a milliseconds delay between the movement of each servo.  Allowed values from 10 to 30 msec.
+  M1=base degrees. Allowed values from 0 to 180 degrees
+  M2=shoulder degrees. Allowed values from 15 to 165 degrees
+  M3=elbow degrees. Allowed values from 0 to 180 degrees
+  M4=wrist vertical degrees. Allowed values from 0 to 180 degrees
+  M5=wrist rotation degrees. Allowed values from 0 to 180 degrees
+  M6=gripper degrees. Allowed values from 10 to 73 degrees. 10: the toungue is open, 73: the gripper is closed.
+  */
+
 #include <Bridge.h>
 #include <BridgeClient.h>
 #include <ArduinoJson.h>
@@ -14,7 +24,6 @@
 #include <SPI.h>
 
 BridgeClient client;
-boolean Connected;
 Servo base;
 Servo shoulder;
 Servo elbow;
@@ -48,7 +57,7 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial){
     //Waiting for Serial to start up
     digitalWrite(13, HIGH);
@@ -57,43 +66,43 @@ void setup() {
     delay(500);  
   }
   Bridge.begin();
-
-  Connected = false;
 }
 
 // ARDUINO entry point #2: infinite loop
 void loop() {
-//New code must go in here
-  if(!Connected){
-    client.connect(ip, 5000);
-    if(client.connected()){
-      Serial.print("Connecting to the server at: ");
-      Serial.println(ip);
-      Connected = true;
+
+  client.stop();
+
+  if(!client.connected()){
+      client.connect(ip, 5000);
+      if(client.connected()){
+      
+        Serial.print("Connected to the server at: ");
+        Serial.println(ip);
+    
+        if(sendRequest(server, resource) && skipResponseHeaders()) {
+          clientData clientData;
+          if(readReponseContent(&clientData)) {
+            // Run the desired function which requires the data
+            Braccio_move(&clientData);
+            wait();
+          }  
+      }
+      else{
+        Serial.println("Could not connect to server!");
+      }
     }
     else{
-      Serial.println("Could not connect to server!");
-      delay(200);
-    }
-  }
-  if(Connected){
-    if(client.connected()){
-      //Really connected send real data, delay to prevent too much data streaming
+      Serial.println("Already connected...");
       if(sendRequest(server, resource) && skipResponseHeaders()) {
         clientData clientData;
         if(readReponseContent(&clientData)) {
           // Run the desired function which requires the data
           Braccio_move(&clientData);
-        }
+          wait();
+        }      
       }
-      wait();          
     }
-  }
-  else{
-    Serial.println("Server connection closed!");
-    client.stop();
-    Serial.println();
-    Connected = false;
   }
 
 //void loop closes here
@@ -163,7 +172,12 @@ void Braccio_move(const struct clientData* clientData) {
   int Servo4 = atoi(clientData->delay_time);
   int Servo5 = atoi(clientData->delay_time);
   int Servo6 = atoi(clientData->delay_time);
-  Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);
+  if(DT == 0){
+    Serial.println("Data not modified!");
+  }
+  else {
+    Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);  
+  }
   //Check if the following delay is long enough for arm to move and recieve a new command
   delay(200);
 }

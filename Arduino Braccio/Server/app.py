@@ -12,7 +12,10 @@ def hello_world():
 def command():
     if request.method == 'GET':
         signal = {"delay_time": "20", "M1": "90", "M2": "60", "M3": "45", "M4": "30", "M5": "75", "M6": "10"}
-        return jsonify(signal)
+        signal_to_send = list()
+        for i in range(0,20):
+            signal_to_send.append(signal)
+        return jsonify(signal_to_send)
     else:
         return render_template("error.html")
 

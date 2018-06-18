@@ -88,3 +88,9 @@ def get_values(all_devices, device_key):
     if len(data)==0:
         data = None
     return data
+
+
+if __name__ == '__main__':
+    devices = connect()
+    for device in devices:
+        print("This is the device ID> " + device)

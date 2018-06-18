@@ -1,15 +1,4 @@
-class Video(object):
-    def __init__(self,path):
-        self.path = path
+import subprocess
 
-    def play(self):
-        from os import startfile
-        startfile(self.path)
+p = subprocess.Popen(["C:\Program Files (x86)\VideoLAN\VLC/vlc.exe",r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\Music\A.mp4"])
 
-    def pause(self):
-        startfile(self.path)
-class Movie_MP4(Video):
-    type = "MP4"
-
-movie = Movie_MP4(r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\MusicA.mp4")
-movie.play()

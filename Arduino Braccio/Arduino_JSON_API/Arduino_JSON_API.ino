@@ -42,7 +42,7 @@ const unsigned long HTTP_TIMEOUT = 10000;  // Max respone time from server
 const size_t MAX_CONTENT_SIZE = 512;       // Max size of the HTTP response
 
 // The structure of data to be extracted from the JSON data
-struct clientData {
+typedef struct clientData {
   char delay_time[8];
   char M1[8];
   char M2[8];
@@ -50,27 +50,22 @@ struct clientData {
   char M4[8];
   char M5[8];
   char M6[8];
-};
+}ClientData;
 
 // Initialization
 void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
-  
+  digitalWrite(13, HIGH);
   Serial.begin(115200);
-  while(!Serial){
-    //Waiting for Serial to start up
-    digitalWrite(13, HIGH);
-    delay(500);
-    digitalWrite(13, LOW);
-    delay(500);  
-  }
   Bridge.begin();
+  digitalWrite(13, LOW);
+  delay(2000);
 }
 
 // ARDUINO entry point #2: infinite loop
 void loop() {
-
+  clientData* Data[20];
   client.stop();
 
   if(!client.connected()){
@@ -81,10 +76,9 @@ void loop() {
         Serial.println(ip);
     
         if(sendRequest(server, resource) && skipResponseHeaders()) {
-          clientData clientData;
-          if(readReponseContent(&clientData)) {
+          if(readReponseContent(Data)) {
             // Run the desired function which requires the data
-            Braccio_move(&clientData);
+            Braccio_move(Data);
             wait();
           }  
       }
@@ -95,10 +89,9 @@ void loop() {
     else{
       Serial.println("Already connected...");
       if(sendRequest(server, resource) && skipResponseHeaders()) {
-        clientData clientData;
-        if(readReponseContent(&clientData)) {
+        if(readReponseContent(Data)) {
           // Run the desired function which requires the data
-          Braccio_move(&clientData);
+          Braccio_move(Data);
           wait();
         }      
       }
@@ -139,47 +132,62 @@ bool skipResponseHeaders() {
 }
 
 // Parse the JSON from the input string and extract the interesting values
-bool readReponseContent(struct clientData* clientData) {
+bool readReponseContent(ClientData** Data) {
   // Compute the optimal size of the JSON buffer according on the data to be parsed
   // Computing the size on: https://bblanchon.github.io/ArduinoJson/assistant/
-  const size_t bufferSize = JSON_OBJECT_SIZE(7) + 60;
+  const size_t bufferSize = 7*JSON_ARRAY_SIZE(11) + JSON_OBJECT_SIZE(7) + 500;
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
+  //JsonObject& root = jsonBuffer.parseObject(client);
   JsonObject& root = jsonBuffer.parseObject(client);
-
+  
   if (!root.success()) {
     return false;
   }
 
-  // Copy the strings into the struct data from the JSONbuffer
-  strcpy(clientData->delay_time, root["delay_time"]);
-  strcpy(clientData->M1, root["M1"]);
-  strcpy(clientData->M1, root["M2"]);
-  strcpy(clientData->M3, root["M3"]);
-  strcpy(clientData->M4, root["M4"]);
-  strcpy(clientData->M5, root["M5"]);
-  strcpy(clientData->M6, root["M6"]);
+  int i;
+  for(i=0; i<20 && strcmp(root["delay_time"][i], 0) != 0; i++){
+    //Checck the NULL character before copying inside the terminating statement of for loop
+    // Copy the strings into the struct data from the JSONbuffer
+    strcpy(Data[i]->delay_time, root["delay_time"][i]);
+    strcpy(Data[i]->M1, root["M1"][i]);
+    strcpy(Data[i]->M1, root["M2"][i]);
+    strcpy(Data[i]->M3, root["M3"][i]);
+    strcpy(Data[i]->M4, root["M4"][i]);
+    strcpy(Data[i]->M5, root["M5"][i]);
+    strcpy(Data[i]->M6, root["M6"][i]); 
+  }
 
   return true;
 }
 
 // Run the function arduino braccio with the parsed data
-void Braccio_move(const struct clientData* clientData) {
-  int DT = atoi(clientData->delay_time);
-  int Servo1 = atoi(clientData->delay_time);
-  int Servo2 = atoi(clientData->delay_time);
-  int Servo3 = atoi(clientData->delay_time);
-  int Servo4 = atoi(clientData->delay_time);
-  int Servo5 = atoi(clientData->delay_time);
-  int Servo6 = atoi(clientData->delay_time);
-  if(DT == 0){
-    Serial.println("Data not modified!");
-  }
-  else {
-    Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);  
+void Braccio_move(ClientData** Data) {
+  int i;
+  int DT;
+  int Servo1;
+  int Servo2;
+  int Servo3;
+  int Servo4;
+  int Servo5;
+  int Servo6;
+  
+  for(i=0;i<20;i++){//Copy and convert values from char to type int
+    DT = atoi(Data[i]->delay_time);
+    Servo1 = atoi(Data[i]->M1);
+    Servo2 = atoi(Data[i]->M2);
+    Servo3 = atoi(Data[i]->M3);
+    Servo4 = atoi(Data[i]->M4);
+    Servo5 = atoi(Data[i]->M5);
+    Servo6 = atoi(Data[i]->M6);
+  
+  
+    //Proceed with the action 
+    Braccio.ServoMovement(DT,Servo1,Servo2,Servo3,Servo4,Servo5,Servo6);
+    delay(200);  
   }
   //Check if the following delay is long enough for arm to move and recieve a new command
-  delay(200);
+  delay(300);
 }
 
 // Pause for a one minute

@@ -1,15 +1,34 @@
-class Video(object):
-    def __init__(self,path):
-        self.path = path
+import subprocess
 
-    def play(self):
-        from os import startfile
-        startfile(self.path)
+def videoplayer(on):
+    def close_program(p):
+        p.terminate()
 
-    def pause(self):
-        startfile(self.path)
-class Movie_MP4(Video):
-    type = "MP4"
+    b=0
+    p = subprocess.Popen(["C:\Program Files (x86)\VideoLAN\VLC/vlc.exe",
+                          r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\Music\B.mp4"])
 
-movie = Movie_MP4(r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\MusicA.mp4")
-movie.play()
+    if on == 1:
+        close_program(p)
+        p1 = subprocess.Popen(["C:\Program Files (x86)\VideoLAN\VLC/vlc.exe",
+                          r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\Music\A.mp4"])
+        b=2
+
+    if on == 0:
+
+        p = subprocess.Popen(["C:\Program Files (x86)\VideoLAN\VLC/vlc.exe",
+                              r"C:\Users\Kavinda Herath\Downloads\New folder (2)\New folder\Music\B.mp4"])
+
+        if b == 2:
+            close_program(p1)
+        else:
+            close_program(p)
+
+
+
+
+a = int(input())
+
+while a!=3:
+    videoplayer(a)
+    a = int(input())

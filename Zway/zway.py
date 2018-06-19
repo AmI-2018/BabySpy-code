@@ -20,10 +20,12 @@ def connect():
 
     #get z-wave devices
     all_devices = rest.send(url=base_url+'/ZWaveAPI/Data/0', auth=(username, password))
+    print(all_devices)
 
     #clean up all_devices and removing the controller
     all_devices = all_devices['devices']
     all_devices.pop('1')
+    print(all_devices)
     return all_devices
 
 
@@ -93,4 +95,4 @@ def get_values(all_devices, device_key):
 if __name__ == '__main__':
     devices = connect()
     for device in devices:
-        print("This is the device ID> " + device)
+        print("This is the device ID: " + device)

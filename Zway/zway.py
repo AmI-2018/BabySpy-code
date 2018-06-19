@@ -1,4 +1,4 @@
-from Zway import rest
+import rest
 import time
 
 #base url of the ZWave API
@@ -73,6 +73,7 @@ def get_value(all_devices, device_key, instance):
             data.append(response['data']['1']['level']['value'])
     else:
         data = None
+    print(data)
     return data
 
 

@@ -4,7 +4,7 @@
 """
 
 
-import rest
+from Rest import rest
 import time
 
 def light():

@@ -1,4 +1,4 @@
-import rest
+from Rest import rest
 import time
 
 #base url of the ZWave API
@@ -19,7 +19,7 @@ def connect():
     """
 
     #get z-wave devices
-    all_devices = rest.send(url=base_url+'/ZWaveAPI/Data/0', auth=(username, password))
+    all_devices = rest.send(url=base_url + '/ZWaveAPI/Data/0', auth=(username, password))
     print(all_devices)
 
     #clean up all_devices and removing the controller
@@ -45,13 +45,13 @@ def set_devices(all_devices, value):
                     for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
                         #turn it on (255)
                         url_to_call = (device_url + '.Set(255)').format(device_key, instance, command_class)
-                        rest.send(url=url_to_call, auth=(username,password))
+                        rest.send(url=url_to_call, auth=(username, password))
             else:
                 for instance in instances:
                     for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
                         #turn it off (0)
                         url_to_call = (device_url + '.Set(0)').format(device_key, instance, command_class)
-                        rest.send(url=url_to_call, auth=(username,password))
+                        rest.send(url=url_to_call, auth=(username, password))
 
 
 def get_value(all_devices, device_key, instance):
@@ -65,11 +65,11 @@ def get_value(all_devices, device_key, instance):
         data = list()
         if comm_classes["sensor_multi"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_multi"])
-            response = rest.send(url=url_to_call, auth=(username,password))
+            response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['3']['val']['value'])
         if comm_classes["sensor_binary"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_binary"])
-            response = rest.send(url=url_to_call, auth=(username,password))
+            response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['1']['level']['value'])
     else:
         data = None

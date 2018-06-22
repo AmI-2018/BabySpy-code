@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d32b1310-f88e-4e64-946f-831504b16632" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Zway/zway.py" beforeDir="false" afterPath="$PROJECT_DIR$/Zway/zway.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,10 +31,10 @@
       <file leaf-file-name="zway.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Zway/zway.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="679">
-              <caret line="106" column="25" selection-start-line="106" selection-start-column="25" selection-end-line="106" selection-end-column="25" />
+            <state relative-caret-position="799">
+              <caret line="114" column="4" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -353,7 +354,14 @@
       <option name="project" value="LOCAL" />
       <updated>1529684787596</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Modified the import rest line">
+      <created>1529685421650</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1529685421650</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -407,7 +415,8 @@
     <MESSAGE value="Updating Braccio server" />
     <MESSAGE value="Changes to the Braccio server" />
     <MESSAGE value="Testing for Zway" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing for Zway" />
+    <MESSAGE value="Modified the import rest line" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified the import rest line" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -425,7 +434,7 @@
         <state relative-caret-position="645">
           <caret line="43" column="68" lean-forward="true" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -440,7 +449,7 @@
         <state relative-caret-position="885">
           <caret line="59" column="93" selection-start-line="59" selection-start-column="93" selection-end-line="59" selection-end-column="93" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -618,10 +627,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Zway/zway.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="679">
-          <caret line="106" column="25" selection-start-line="106" selection-start-column="25" selection-end-line="106" selection-end-column="25" />
+        <state relative-caret-position="799">
+          <caret line="114" column="4" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

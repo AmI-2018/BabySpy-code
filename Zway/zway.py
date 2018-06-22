@@ -1,4 +1,4 @@
-from Rest import rest
+import rest
 import time
 
 #base url of the ZWave API

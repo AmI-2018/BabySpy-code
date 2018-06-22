@@ -23,7 +23,9 @@ def shelf():
 
 @app.route('/retrieve')
 def retrieve():
+
     return render_template("retrieve.html")
+
 
 @app.route('/replace')
 def replace():

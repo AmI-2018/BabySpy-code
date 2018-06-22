@@ -6,15 +6,15 @@
 </head>
 <body>
 
-<h1>Get Started with the Arduino Braccio</h1>
+<h1>Get Started with the BabySpy Braccio</h1>
 
-<h1>Welcome {{ name }} to BabySpy</h1>
+<h1>Welcome to BabySpy</h1>
 
-<h1>Please select a task you would like to perform:</h1>
+<h2>Please select a task you would like to perform:</h2>
 
-<h2>Retrieve an object</h2>
-<h2>Return an object</h2>
-<h2>Toss the ball</h2>
+<p><a href="{{ url_for('retrieve') }}">Take an object from the shelf?</a></p>
+<p><a href="{{ url_for('replace') }}">Return an object to the shelf?</a></p>
+<p><a href="{{ url_for('throw') }}">Play with the ball?</a></p>
 
 
 

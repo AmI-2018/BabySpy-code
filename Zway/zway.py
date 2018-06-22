@@ -2,7 +2,7 @@ import rest
 import time
 
 #base url of the ZWave API
-base_url = 'http://192.168.0.202:8083'
+base_url = 'http://localhost:8083'
 device_url = base_url + '/ZWaveAPI/Run/devices[{}].instances[{}].commandClasses[{}]'
 #useful command classes
 comm_classes = {"sensor_multi": '49', "sensor_binary": '48'}

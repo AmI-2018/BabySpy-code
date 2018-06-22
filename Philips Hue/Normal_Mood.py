@@ -1,3 +1,4 @@
+
 """
     @author
     Amir
@@ -25,32 +26,18 @@ def light():
     # get the Hue lights
     all_the_lights = rest.send(url=lights_url)
 
-    #Changing the color
-    colors = [0, 12750, 25500, 46920, 56100, 65280]
-    for color in colors:
-        #Flashing
-        for alert in range (0,1):
-            if type(all_the_lights) is dict:
+
+    if type(all_the_lights) is dict:
                     # iterate over the Hue lights, turn them on with the color loop effect
-                    light = '5'
+                    light = '8'
                     #for light in all_the_lights:
                     url_to_call = lights_url + light + '/state'
-                    body = '{ "on" : true, "hue" : %s }' %color
+                    body = '{ "on" : true, "hue" : "56100" }'
                     print(color)
                     # to set the red color
                     # body = '{ "hue" : 0 }'
                     rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+                    
 
-                    # wait 10 seconds...
-                    for i in range(0, 2):
-                        time.sleep(1)
-                        print(2-i)
-
-                    # iterate over the Hue lights and turn them off
-                    #for light in all_the_lights:
-                    #url_to_call = lights_url + light + '/state'
-                    body = '{ "on" : false }'
-                    rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
-                    time.sleep(2)
             else:
                 print('Error:', all_the_lights[0]['error'])

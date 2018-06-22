@@ -4,12 +4,10 @@
     Amir
 """
 
-
-from Rest import rest
+import rest
 import time
 
-def light():
-
+if __name__ == '__main__':
 
     # the base URL
     base_url = 'http://192.168.0.201'
@@ -28,16 +26,15 @@ def light():
 
 
     if type(all_the_lights) is dict:
-                    # iterate over the Hue lights, turn them on with the color loop effect
-                    light = '8'
-                    #for light in all_the_lights:
-                    url_to_call = lights_url + light + '/state'
-                    body = '{ "on" : true, "hue" : "56100" }'
-                    print(color)
-                    # to set the red color
-                    # body = '{ "hue" : 0 }'
-                    rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
-                    
+        # iterate over the Hue lights, turn them on with the color loop effect
+        light = '9'
+        #for light in all_the_lights:
+        url_to_call = lights_url + light + '/state'
+        body = '{ "on" : false, "hue" : "56100" }'
+        # to set the red color
+        # body = '{ "hue" : 0 }'
+        time.sleep(1)
+        rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 
-            else:
-                print('Error:', all_the_lights[0]['error'])
+    else:
+        print('Error:', all_the_lights[0]['error'])

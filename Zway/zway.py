@@ -109,6 +109,8 @@ if __name__ == '__main__':
     time.sleep(10)
     """
 
+    motion = get_values(devices, 2)
+    door_window = get_values(devices, 3)
     print(motion)
     print(door_window)
 

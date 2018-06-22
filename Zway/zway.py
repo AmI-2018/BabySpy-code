@@ -97,3 +97,12 @@ if __name__ == '__main__':
     devices = connect()
     for device in devices:
         print("This is the device ID: " + device)
+    set_devices(devices, True)
+    for i in range(0,10):
+        time.sleep(2)
+        print(get_values(devices,2))
+        print(get_values(devices,3))
+    time.sleep(10)
+    print("Turning devices off")
+    set_devices(devices, False)
+    print("Ending")

@@ -73,7 +73,7 @@ def get_value(all_devices, device_key, instance):
             data.append(response['data']['1']['level']['value'])
     else:
         data = None
-    print(data)
+    #print(data)
     return data
 
 
@@ -98,10 +98,13 @@ if __name__ == '__main__':
     for device in devices:
         print("This is the device ID: " + device)
     set_devices(devices, True)
-    for i in range(0,10):
-        time.sleep(2)
-        print(get_values(devices,2))
-        print(get_values(devices,3))
+    for i in range(0,2):
+        time.sleep(40)
+        motion = get_values(devices,2)
+        door_window = get_values(devices,3)
+        print(motion)
+        time.sleep(25)
+        print(door_window)
     time.sleep(10)
     print("Turning devices off")
     set_devices(devices, False)

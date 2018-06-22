@@ -98,7 +98,6 @@ if __name__ == '__main__':
     for device in devices:
         print("This is the device ID: " + device)
     set_devices(devices, True)
-    """
     for i in range(0,2):
         time.sleep(40)
         motion = get_values(devices,2)
@@ -107,13 +106,6 @@ if __name__ == '__main__':
         time.sleep(25)
         print(door_window)
     time.sleep(10)
-    """
-
-    motion = get_values(devices, 2)
-    door_window = get_values(devices, 3)
-    print(motion)
-    print(door_window)
-
     print("Turning devices off")
     set_devices(devices, False)
     print("Ending")

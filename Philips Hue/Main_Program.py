@@ -31,7 +31,6 @@ if __name__ == '__main__':
       import Arduino_JASON_API
       #function
 
-      test_flashing.light()
     else:
       print("Safe Condition")
 

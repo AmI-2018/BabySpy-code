@@ -1,42 +1,52 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, request, jsonify
+# from Book Server import fun
 
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def welcome_page(name):
-    return render_template('welcome.html', name=name)
+def welcome_page():
+    return render_template("welcome.html")
 
 
-@app.route('/Retrieve', methods=['GET', 'POST'])
+"""
+# Check if this route is really required?
+@app.route('/shelf')
+def shelf():
+    if request.form == ['action']:
+        return render_template("retrieve.html")
+    if request.form == ['reaction']:
+        return render_template("return.html")
+"""
+
+
+@app.route('/retrieve')
 def retrieve():
-    if request.methods == 'POST':
-        return render_template('retrieve.html')
+
+    return render_template("retrieve.html")
 
 
-@app.route('/Return', methods=['GET', 'POST'])
-def place():
-    if request.methods == 'POST':
-        return render_template('place.html')
+@app.route('/replace')
+def replace():
+    return render_template("replace.html")
 
 
-@app.route('/Throw', methods=['GET', 'POST'])
+@app.route('/throw', methods=['GET'])
 def throw():
-    if request.methods == 'POST':
-        return jsonify("ERROR!")
-    if request.methods == 'GET':
-        signal = direction()
+    if request.method == 'POST':
+        error = "Error! Wrong type of method!"
+        return jsonify(error)
+    if request.method == 'GET':
+        signal = dict()
         return jsonify(signal)
-    return render_template('throw.html')
+    return render_template("throw.html")
 
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
 
 
-#Function to provide the direction of the throw based on which sensor
-def direction():
-    command = dict()
-    #Don't forget the json data format
-    return command
+"""
+port:port_no/command/
+"""

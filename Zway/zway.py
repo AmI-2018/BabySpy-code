@@ -1,14 +1,14 @@
-from Zway import rest
+import rest
 import time
 
 #base url of the ZWave API
-base_url = 'http://192.168.0.202:8083'
+base_url = 'http://localhost:8083'
 device_url = base_url + '/ZWaveAPI/Run/devices[{}].instances[{}].commandClasses[{}]'
 #useful command classes
 comm_classes = {"sensor_multi": '49', "sensor_binary": '48'}
 # user credentials
-username = ''
-password = ''
+username = 'admin'
+password = 'BaBySpy-zway.18'
 
 
 def connect():
@@ -19,11 +19,13 @@ def connect():
     """
 
     #get z-wave devices
-    all_devices = rest.send(url=base_url+'/ZWaveAPI/Data/0', auth=(username, password))
+    all_devices = rest.send(url=base_url + '/ZWaveAPI/Data/0', auth=(username, password))
+    #print(all_devices)
 
     #clean up all_devices and removing the controller
     all_devices = all_devices['devices']
     all_devices.pop('1')
+    #print(all_devices)
     return all_devices
 
 
@@ -43,13 +45,13 @@ def set_devices(all_devices, value):
                     for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
                         #turn it on (255)
                         url_to_call = (device_url + '.Set(255)').format(device_key, instance, command_class)
-                        rest.send(url=url_to_call, auth=(username,password))
+                        rest.send(url=url_to_call, auth=(username, password))
             else:
                 for instance in instances:
                     for command_class in all_devices[device_key]['instances'][instance]['commandClasses']:
                         #turn it off (0)
                         url_to_call = (device_url + '.Set(0)').format(device_key, instance, command_class)
-                        rest.send(url=url_to_call, auth=(username,password))
+                        rest.send(url=url_to_call, auth=(username, password))
 
 
 def get_value(all_devices, device_key, instance):
@@ -63,14 +65,15 @@ def get_value(all_devices, device_key, instance):
         data = list()
         if comm_classes["sensor_multi"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_multi"])
-            response = rest.send(url=url_to_call, auth=(username,password))
+            response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['3']['val']['value'])
         if comm_classes["sensor_binary"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_binary"])
-            response = rest.send(url=url_to_call, auth=(username,password))
+            response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['1']['level']['value'])
     else:
         data = None
+    #print(data)
     return data
 
 
@@ -93,4 +96,16 @@ def get_values(all_devices, device_key):
 if __name__ == '__main__':
     devices = connect()
     for device in devices:
-        print("This is the device ID> " + device)
+        print("This is the device ID: " + device)
+    set_devices(devices, True)
+    for i in range(0,2):
+        time.sleep(40)
+        motion = get_values(devices,2)
+        door_window = get_values(devices,3)
+        print(motion)
+        time.sleep(25)
+        print(door_window)
+    time.sleep(10)
+    print("Turning devices off")
+    set_devices(devices, False)
+    print("Ending")

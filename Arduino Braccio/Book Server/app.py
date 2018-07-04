@@ -1,3 +1,4 @@
+import pymysql
 from flask import Flask, render_template, request, jsonify
 # from Book Server import fun
 
@@ -23,12 +24,27 @@ def shelf():
 
 @app.route('/retrieve')
 def retrieve():
+    #Access the data and provide the list of books
+    list = "select * from --DATABASE--"
+    connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
+    cursor = connection.cursor()
+    cursor.execute(list)
+    results = cursor.fetchall()
+    #find a way upload the results to the webpage
 
     return render_template("retrieve.html")
 
 
 @app.route('/replace')
 def replace():
+    # Access the data and provide the list of books
+    list = "select * from --DATABASE--"
+    connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
+    cursor = connection.cursor()
+    cursor.execute(list)
+    results = cursor.fetchall()
+    # find a way upload the results to the webpage
+
     return render_template("replace.html")
 
 

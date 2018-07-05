@@ -6,13 +6,25 @@
 </head>
 <body>
 
-<h1>Would you like to retrieve an Object?</h1>
-<h2>Please select the number you would like to retrieve?</h2>
+<h1>The books already on the shelf:</h1>
+<table border = 1>
+        {% for book in book_list %}
+            {% for title, author in book.items() %}
+            <tr>
+                <td> {{ title }} </td>
+                <td> {{ author }} </td>
+                <td> {{ pulisher }} </td>
+            </tr>
+            {% endfor %}
+            <td><button type="button">RETRIEVE</button></td>
+        {% endfor %}
+</table>
 
-<img src="{{ url_for('static', filename="Number 1.png") }}">
-<img src="{{ url_for('static', filename="Number 2.png") }}">
-<img src="{{ url_for('static', filename="Number 3.png") }}">
-<img src="{{ url_for('static', filename="Number 4.png") }}">
+<h1>Select the book you would like to replace from the list above</h1>
+
+<h2>Are you ready to take the book?</h2>
+<button type="button">YES</button>
+<button type="button">NO</button>
 
 
 </body>

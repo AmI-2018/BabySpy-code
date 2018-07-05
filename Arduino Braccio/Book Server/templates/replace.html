@@ -2,15 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Return/Replace an Object</title>
+    <title>Replace an Object</title>
 </head>
 <body>
 
-<h1>Would you like to retrieve an Object?</h1>
-<h2>Are you ready to let go of the object?</h2>
+<h1>The books that are not on the shelf:</h1>
+<table border = 1>
+        {% for book in book_list %}
+            {% for title, author in book.items() %}
+            <tr>
+                <td> {{ title }} </td>
+                <td> {{ author }} </td>
+                <td> {{ pulisher }} </td>
+            </tr>
+            {% endfor %}
+            <td><button type="button">RETURN</button></td>
+        {% endfor %}
+</table>
 
-<p><a href="{{ url_for('') }}">YES</a></p>
-<p><a href="{{ url_for('') }}">NO</a></p>
+<h1>Select the book you would like to replace from the list above</h1>
+
+
+<h2>Are you ready to let go of the book?</h2>
+<button type="button">YES</button>
+<button type="button">NO</button>
+
 
 </body>
 </html>

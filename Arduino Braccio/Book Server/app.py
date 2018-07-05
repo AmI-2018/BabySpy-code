@@ -19,6 +19,8 @@ def retrieve():
     cursor = connection.cursor()
     cursor.execute(list)
     results = cursor.fetchall()
+    cursor.close()
+    connection.close()
     # find a way upload the results to the webpage
     """
 
@@ -36,11 +38,36 @@ def replace():
     cursor = connection.cursor()
     cursor.execute(list)
     results = cursor.fetchall()
+    cursor.close()
+    connection.close()
     # find a way upload the results to the webpage
     """
     results = [{"title": "Dog", "author": "Snoop", "publisher": "JK"},
                {"title": "Cat", "author": "Feline", "publisher": "Not JK"}]
     return render_template("replace.html", book_list = results)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        list = "select username from --DATABASE--"
+        connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
+        cursor = connection.cursor()
+        cursor.execute(list)
+        results = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        for users in results:
+            if username in users.username and password in users.password:
+                return render_template("setting.html", username=username)
+            elif request.form.get('new_user'):
+                # Add the new user to the database
+                return render_template("setting.html", username=username)
+            else:
+                return render_template("error_login.html")
+
 
 
 @app.route('/throw', methods=['GET'])
@@ -58,6 +85,8 @@ def throw():
         cursor = connection.cursor()
         cursor.execute(list)
         signal = cursor.fetchall()
+        cursor.close()
+        connection.close()
         # find a way upload the results to the webpage
         """
 

@@ -4,7 +4,7 @@
     Amir
 """
 
-import rest
+from BabySpy-code import rest
 import time
 
 if __name__ == '__main__':

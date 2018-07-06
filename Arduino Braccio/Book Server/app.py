@@ -14,10 +14,10 @@ def welcome_page():
 def retrieve():
     # Access the data and provide the list of books
     """
-    list = "select * from --DATABASE--"
+    sql = "select * from --DATABASE--"
     connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
     cursor = connection.cursor()
-    cursor.execute(list)
+    cursor.execute(sql)
     results = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -33,10 +33,10 @@ def retrieve():
 def replace():
     # Access the data and provide the list of books
     """
-    list = "select * from --DATABASE--"
+    sql1 = "select * from --DATABASE--"
     connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
     cursor = connection.cursor()
-    cursor.execute(list)
+    cursor.execute(sql1)
     results = cursor.fetchall()
     cursor.close()
     connection.close()
@@ -52,10 +52,10 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        list = "select username from --DATABASE--"
+        sql2 = "select * from shelf"
         connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
         cursor = connection.cursor()
-        cursor.execute(list)
+        cursor.execute(sql2)
         results = cursor.fetchall()
         cursor.close()
         connection.close()
@@ -69,7 +69,6 @@ def login():
                 return render_template("error_login.html")
 
 
-
 @app.route('/throw', methods=['GET'])
 def throw():
     # Throw function should provide an API command for the Braccio
@@ -80,10 +79,10 @@ def throw():
         # Access the data and provide the list of books
         signal = dict()
         """
-        list = "select * from --DATABASE--"
+        sql3 = "select * from --DATABASE--"
         connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
         cursor = connection.cursor()
-        cursor.execute(list)
+        cursor.execute(sql3)
         signal = cursor.fetchall()
         cursor.close()
         connection.close()

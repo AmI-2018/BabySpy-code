@@ -26,7 +26,7 @@ def retrieve():
 
     results = [{"title": "Dog", "author": "Snoop", "publisher": "JK"},
                {"title": "Cat", "author": "Feline", "publisher": "Not JK"}]
-    return render_template("retrieve.html", book_list = results)
+    return render_template("retrieve.html", book_list=results)
 
 
 @app.route('/replace')
@@ -47,12 +47,12 @@ def replace():
     return render_template("replace.html", book_list = results)
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/setting', methods=['POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        sql2 = "select * from shelf"
+        sql2 = "select * from book"
         connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
         cursor = connection.cursor()
         cursor.execute(sql2)

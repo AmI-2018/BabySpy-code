@@ -4,7 +4,7 @@
 """
 
 
-import rest
+from BabySpy-code import rest
 import time
 
 def light():

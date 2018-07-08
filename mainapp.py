@@ -1,6 +1,6 @@
 import zway
-from . import Philips-Hue
-from Philips-Hue import test_flashing
+#from . import Philips_Hue
+from Philips_Hue import test_flashing
 
 
 def main():

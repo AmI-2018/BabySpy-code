@@ -69,6 +69,8 @@ def login():
                 return render_template("error_login.html")
 
 
+"""
+# 
 @app.route('/throw', methods=['GET'])
 def throw():
     # Throw function should provide an API command for the Braccio
@@ -78,7 +80,7 @@ def throw():
     if request.method == 'GET':
         # Access the data and provide the list of books
         signal = dict()
-        """
+        
         sql3 = "select * from --DATABASE--"
         connection = pymysql.connect(user="root", password="", host="localhost", database="--DATABASE--")
         cursor = connection.cursor()
@@ -87,10 +89,11 @@ def throw():
         cursor.close()
         connection.close()
         # find a way upload the results to the webpage
-        """
+        
 
         return jsonify(signal)
     return render_template("throw.html")
+"""
 
 
 if __name__ == '__main__':

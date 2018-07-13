@@ -65,13 +65,13 @@ def get_value(all_devices, device_key, instance):
     if all_devices[device_key]['instances'][instance] is not None:
         data = list()
         if comm_classes["sensor_multi"] in all_devices[device_key]['instances'][instance]['commandClasses']:
-            url_to_update = update_url.format(device_key, comm_classes['sensor-multi'], instance)
+            url_to_update = update_url.format(device_key, comm_classes['sensor_multi'], instance)
             rest.send(url=url_to_update, auth=(username, password))
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_multi"])
             response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['3']['val']['value'])
         if comm_classes["sensor_binary"] in all_devices[device_key]['instances'][instance]['commandClasses']:
-            url_to_update = update_url.format(device_key, comm_classes['sensor-binary'], instance)
+            url_to_update = update_url.format(device_key, comm_classes['sensor_binary'], instance)
             rest.send(url=url_to_update, auth=(username, password))
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_binary"])
             response = rest.send(url=url_to_call, auth=(username, password))

@@ -1,4 +1,3 @@
-
 """
     @author
     Amir
@@ -30,7 +29,7 @@ if __name__ == '__main__':
         light = '9'
         #for light in all_the_lights:
         url_to_call = lights_url + light + '/state'
-        body = '{ "on" : true, "hue" : "56100" }'
+        body = '{ "on" : false, "hue" : "56100" }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 

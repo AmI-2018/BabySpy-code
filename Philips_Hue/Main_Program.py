@@ -1,12 +1,13 @@
 
 
+
 """
 @author AmirZeraa
 """
 
 #coding main program to autorun the system
 
-#import rest from Z-wave
+from . import rest
 #import jason
 
 

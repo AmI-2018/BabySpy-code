@@ -1,13 +1,12 @@
-
 """
     @author
     Amir
 """
 
-import rest
+from . import rest
 import time
 
-if __name__ == '__main__':
+def off():
 
     # the base URL
     base_url = 'http://192.168.0.201'
@@ -31,8 +30,6 @@ if __name__ == '__main__':
         #for light in all_the_lights:
         url_to_call = lights_url + light + '/state'
         body = '{ "on" : false, "hue" : "56100" }'
-        # to set the red color
-        # body = '{ "hue" : 0 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 

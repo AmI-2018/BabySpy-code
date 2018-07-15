@@ -94,9 +94,11 @@ def get_values(all_devices, device_key):
     for instance in all_devices[device_key]['instances']:
         value = get_value(all_devices, device_key, instance)
         if value is not None:
-            data.append(value.copy())
+            data.append(value)
     if len(data) == 0:
         data = None
+    elif len(data) == 1:
+        data = data.pop()
     return data
 
 

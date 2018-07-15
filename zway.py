@@ -66,14 +66,14 @@ def get_value(all_devices, device_key, instance):
         data = list()
         if comm_classes["sensor_multi"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_update = update_url.format(device_key, comm_classes['sensor_multi'], instance)
-            print(device_key + "\t" + instance)
+            # print(device_key + "\t" + instance)
             rest.send(url=url_to_update, auth=(username, password))
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_multi"])
             response = rest.send(url=url_to_call, auth=(username, password))
             data.append(response['data']['3']['val']['value'])
         if comm_classes["sensor_binary"] in all_devices[device_key]['instances'][instance]['commandClasses']:
             url_to_update = update_url.format(device_key, comm_classes['sensor_binary'], instance)
-            print(device_key + "\t" + instance)
+            # print(device_key + "\t" + instance)
             rest.send(url=url_to_update, auth=(username, password))
             url_to_call = device_url.format(device_key, instance, comm_classes["sensor_binary"])
             response = rest.send(url=url_to_call, auth=(username, password))
@@ -94,7 +94,7 @@ def get_values(all_devices, device_key):
     for instance in all_devices[device_key]['instances']:
         value = get_value(all_devices, device_key, instance)
         if value is not None:
-            data.append(value)
+            data.append(value.copy())
     if len(data) == 0:
         data = None
     return data

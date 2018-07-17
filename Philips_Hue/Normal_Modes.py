@@ -6,6 +6,8 @@
 import rest
 import time
 
+value = 0
+
 def normal():
 
     # the base URL
@@ -28,6 +30,7 @@ def normal():
         body = '{ "on" : true, "hue" : 56100 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        global value
         value = 1
         check(value)
         return value
@@ -59,6 +62,7 @@ def off():
         body = '{ "on" : false}'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        global value
         value = 2
         check(value)
         return value
@@ -90,6 +94,7 @@ def reading():
         body = '{ "on" : true, "hue" : 12750 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        global value
         value = 3
         check(value)
         return value
@@ -121,6 +126,7 @@ def tv():
         body = '{ "on" : true, "hue" : 46920 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        global value
         value = 4
         check(value)
         return value
@@ -139,4 +145,20 @@ def check(item):
         print("It is the Reading mode")
     if item == 4:
         print("It is the TV mode")
-        
+
+
+def set_mode(mode):
+
+    if mode == 1:
+        normal()
+    if mode == 2:
+        off()
+    if mode == 3:
+        reading()
+    if mode == 4:
+        tv()
+
+def get_mode():
+
+    global value
+    return value

@@ -9,7 +9,7 @@
 
 #import functions
 import zway
-import Normal_Mood
+import
 import braccio
 import time
 
@@ -30,7 +30,7 @@ def main():
       test_flashing.light()
     #if not turn the lights on in the normal mode
     else:
-        Normal_Mood.normal()
+        Normal_Mod.normal()
         print ("Safe Condition")
 
     time.sleep(5)

@@ -28,6 +28,9 @@ def normal():
         body = '{ "on" : true, "hue" : 56100 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        value = 1
+        check(value)
+        return value
 
     else:
         print('Error:', all_the_lights[0]['error'])
@@ -56,6 +59,9 @@ def off():
         body = '{ "on" : false}'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        value = 2
+        check(value)
+        return value
 
     else:
         print('Error:', all_the_lights[0]['error'])
@@ -84,6 +90,9 @@ def reading():
         body = '{ "on" : true, "hue" : 12750 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        value = 3
+        check(value)
+        return value
 
     else:
         print('Error:', all_the_lights[0]['error'])
@@ -112,6 +121,22 @@ def tv():
         body = '{ "on" : true, "hue" : 46920 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
+        value = 4
+        check(value)
+        return value
 
     else:
         print('Error:', all_the_lights[0]['error'])
+
+
+def check(item):
+
+    if item == 1:
+        print("It is the Normal mode")
+    if item == 2:
+        print("It is the Off mode")
+    if item == 3:
+        print("It is the Reading mode")
+    if item == 4:
+        print("It is the TV mode")
+        

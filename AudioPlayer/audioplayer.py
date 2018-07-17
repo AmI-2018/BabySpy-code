@@ -93,6 +93,5 @@ def audioplayer(cmd1,cmd2):
         print("funtioning the command", cmd2)
         tn_player.write(command.encode() + "\n".encode())
 
-
 audioplayer("F:\A1.mp4","")
 audioplayer("","pause")

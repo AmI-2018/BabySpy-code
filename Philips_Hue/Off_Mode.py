@@ -3,7 +3,7 @@
     Amir
 """
 
-from . import rest
+import rest
 import time
 
 def off():

@@ -17,10 +17,13 @@ import time
 
 def main():
     #getting value from the zwave
-  data = zway.get_values()
+    loop = 'true'
+    while loop == 'true':
+        #check every 10 second the sensors
+        time.sleep(10)
+        data = zway.get_values()
     #check if the sensre detect the child in a dangrouse situation
-  while 'true':
-      time.sleep(10)
+
     #if yes start to distract the child by lights
     if data is 'true':
       import test_flashing
@@ -36,6 +39,5 @@ def main():
         braccio.read()
     else:
       print("Safe Condition")
-
 
 

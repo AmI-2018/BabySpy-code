@@ -10,6 +10,7 @@
 #import functions
 import zway
 import Normal_Mood
+import braccio
 
 
 
@@ -21,12 +22,11 @@ def main():
       import test_flashing
       test_flashing.light()
     else:
-      normal.Normal_Mood
-      print ("Safe Condition")
+        Normal_Mood.normal()
+        print ("Safe Condition")
 
     if data is 'true':
-      import Arduino_JASON_API
-
+        braccio.read()
     else:
       print("Safe Condition")
 

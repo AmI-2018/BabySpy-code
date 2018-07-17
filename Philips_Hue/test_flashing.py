@@ -12,12 +12,8 @@ def light():
 
     # the base URL
     base_url = 'http://192.168.0.201'
-    # if you are using the emulator, probably the base_url will be:
-    # base_url = 'http://localhost:8000'
 
     username = '5UsL1ptHh6tp2M0yDdJDXJtOG4J9UO1bYbhpz2Cd'
-    # if you are using the emulator, the username is:
-    # username = 'newdeveloper'
 
     # lights URL
     lights_url = base_url + '/api/' + username + '/lights/'
@@ -25,23 +21,21 @@ def light():
     # get the Hue lights
     all_the_lights = rest.send(url=lights_url)
 
-    #Changing the color
-    colors = [0, 12750, 25500, 46920, 56100, 65280]
-    for color in colors:
-        #Flashing
-        for alert in range (0,1):
+    #flashing
+    for alert in range(0, 2):
+    #changing the colors
+     colors = [0, 12750, 25500, 46920, 56100, 65280]
+     for color in colors:
             if type(all_the_lights) is dict:
                     # iterate over the Hue lights, turn them on with the color loop effect
-                    light = '9'
+                    light = '3'
                     #for light in all_the_lights:
                     url_to_call = lights_url + light + '/state'
                     body = '{ "on" : true, "hue" : %s }' %color
                     print(color)
-                    # to set the red color
-                    # body = '{ "hue" : 0 }'
                     rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 
-                    # wait 10 seconds...
+                    # wait 2 seconds...
                     for i in range(0, 2):
                         time.sleep(1)
                         print(2-i)

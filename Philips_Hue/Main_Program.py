@@ -7,33 +7,36 @@
 
 #coding main program to autorun the system
 
-from . import rest
-#import jason
+#import functions
+import zway
+import braccio
+import time
+from Philips_Hue import Normal_Mode
 
 
-if __name__ == '__main__':
+def main():
+    #getting value from the zwave
+    loop = 'true'
+    while loop == 'true':
+        #check every 10 second the sensors
+        time.sleep(10)
+        data = zway.get_values()
+    #check if the sensre detect the child in a dangrouse situation
 
-  jason = 'true'
-  while jason == 'true':
-
-    wave_url = jason #+ '/api/'
-
-    if wave_url is 'true':
+    #if yes start to distract the child by lights
+    if data is 'true':
       import test_flashing
       test_flashing.light()
+    #if not turn the lights on in the normal mode
     else:
+        Normal_Mode.normal()
         print ("Safe Condition")
 
-  while jason == 'true':
-
-    wave_url = jason + '/api/'
-
-    if wave_url is 'true':
-      import Arduino_JASON_API
-      #function
-
+    time.sleep(5)
+    #try to distract the child by Braccio
+    if data is 'true':
+        braccio.read()
     else:
       print("Safe Condition")
-
 
 

@@ -4,10 +4,10 @@
     Amir
 """
 
-from . import rest
+import rest
 import time
 
-def normal():
+def tv():
 
     # the base URL
     base_url = 'http://192.168.0.201'
@@ -20,13 +20,13 @@ def normal():
     # get the Hue lights
     all_the_lights = rest.send(url=lights_url)
 
-    #set the normal color and turn the lights on
+    #setting the light color for TV mode
     if type(all_the_lights) is dict:
         # iterate over the Hue lights, turn them on with the color loop effect
-        light = '9'
+        light = '3'
         #for light in all_the_lights:
         url_to_call = lights_url + light + '/state'
-        body = '{ "on" : true, "hue" : "56100" }'
+        body = '{ "on" : true, "hue" : 46920 }'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 

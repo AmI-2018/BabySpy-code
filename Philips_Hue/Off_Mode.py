@@ -3,7 +3,7 @@
     Amir
 """
 
-from . import rest
+import rest
 import time
 
 def off():
@@ -22,10 +22,10 @@ def off():
     #Turn off the lights
     if type(all_the_lights) is dict:
         # iterate over the Hue lights, turn them on with the color loop effect
-        light = '9'
+        light = '3'
         #for light in all_the_lights:
         url_to_call = lights_url + light + '/state'
-        body = '{ "on" : false, "hue" : "56100" }'
+        body = '{ "on" : false}'
         time.sleep(1)
         rest.send('PUT', url_to_call, body, {'Content-Type': 'application/json'})
 

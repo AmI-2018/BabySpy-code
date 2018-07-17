@@ -5,12 +5,12 @@ import zway
 import rest
 import time
 import random
-from Philips_Hue import test_flashing
+from Philips_Hue import test_flashing, Normal_Modes
 import userdb
 
 light_motion_id = '2'
 door_id = '3'
-base_url = ''
+base_url = 'localhost:8080'
 
 
 def distract(intervent, luminosity):
@@ -18,11 +18,16 @@ def distract(intervent, luminosity):
     possible_actions = ['recording', 'flashing']
     if luminosity > luminosity_highlevel:
         possible_actions.remove('flashing')
-    action = possible_actions[random.randint(0, len(possible_actions)-1)]
-    if action == 'recording':
+        action = possible_actions[random.randint(0, len(possible_actions)-1)]
+    """if action == 'recording':
         # recording
+        userdb.recording()
     else:
-        # flashing
+    """
+    # flashing
+    mode = Normal_Modes.get_mode()
+    test_flashing.light()
+    Normal_Modes.set_mode(mode)
 
 
 def main():

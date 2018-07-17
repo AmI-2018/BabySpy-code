@@ -19,7 +19,8 @@ def main():
     #getting value from the zwave
   data = zway.get_values()
     #check if the sensre detect the child in a dangrouse situation
-  while data[2] == 'true':
+  while 'true':
+      time.sleep(10)
     #if yes start to distract the child by lights
     if data is 'true':
       import test_flashing

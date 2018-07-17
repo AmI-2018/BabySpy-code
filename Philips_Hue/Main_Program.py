@@ -7,30 +7,25 @@
 
 #coding main program to autorun the system
 
-from . import rest
-#import jason
+#import functions
+import zway
+import Normal_Mood
 
 
-if __name__ == '__main__':
 
-  jason = 'true'
-  while jason == 'true':
+def main():
 
-    wave_url = jason #+ '/api/'
-
-    if wave_url is 'true':
+  data = zway.get_values()
+  while data[2] == 'true':
+    if data is 'true':
       import test_flashing
       test_flashing.light()
     else:
-        print ("Safe Condition")
+      normal.Normal_Mood
+      print ("Safe Condition")
 
-  while jason == 'true':
-
-    wave_url = jason + '/api/'
-
-    if wave_url is 'true':
+    if data is 'true':
       import Arduino_JASON_API
-      #function
 
     else:
       print("Safe Condition")

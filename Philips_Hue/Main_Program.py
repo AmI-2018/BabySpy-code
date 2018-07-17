@@ -9,10 +9,9 @@
 
 #import functions
 import zway
-import
 import braccio
 import time
-
+from Philips_Hue import Normal_Mode
 
 
 def main():
@@ -30,7 +29,7 @@ def main():
       test_flashing.light()
     #if not turn the lights on in the normal mode
     else:
-        Normal_Mod.normal()
+        Normal_Mode.normal()
         print ("Safe Condition")
 
     time.sleep(5)

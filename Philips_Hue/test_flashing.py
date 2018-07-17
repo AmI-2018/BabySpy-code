@@ -25,10 +25,10 @@ def light():
     colors = [0, 12750, 25500, 46920, 56100, 65280]
     for color in colors:
         #Flashing
-        for alert in range (0,1):
+        for alert in range (0,3):
             if type(all_the_lights) is dict:
                     # iterate over the Hue lights, turn them on with the color loop effect
-                    light = '9'
+                    light = '3'
                     #for light in all_the_lights:
                     url_to_call = lights_url + light + '/state'
                     body = '{ "on" : true, "hue" : %s }' %color

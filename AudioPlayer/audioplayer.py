@@ -10,49 +10,13 @@ command:
 import telnetlib
 import subprocess
 
-"""
-print("initializing the screen saver localhost")
-screen_saver=subprocess.call(r"C:\Program Files (x86)\VideoLAN\VLC\vlc --intf rc --rc-host localhost:5000")
 
+"""
 print("initializing the player localhost")
 player=subprocess.call(r"C:\Program Files (x86)\VideoLAN\VLC\vlc --intf rc --rc-host localhost:4000")
 """
-print("initializing telnetlib")
 
-tn_player = telnetlib.Telnet("localhost", "4000")
-player_dir = "add F:\A1.mp4"#insert the path to video and the video name
-
-
-def video_player_initialsing():
-
-    print("opening video")
-    tn_player.write(player_dir.encode()+"\n".encode())
-
-def config_video(cmd_v):
-    print(cmd_v)
-    tn_player.write(cmd_v.encode()+"\n".encode())
-
-def quit(cmd_q):
-    print(cmd_q)
-    tn_player.write(cmd_q.encode()+"\n".encode())
-
-a=0
-
-
-while a!=5:
-    print("press 1 for the video intiialising")
-    print("press 3 for the video configure the video")
-    print("press 5 for the video to quit")
-
-    a = int(input())
-
-    if a == 1:
-        print("initializing")
-        video_player_initialsing()
-
-    if a == 3:
-        print("please enter what to do")
-        c = """   | add XYZ  . . . . . . . . . . . . add XYZ to playlist
+"""   | add XYZ  . . . . . . . . . . . . add XYZ to playlist
                 | enqueue XYZ  . . . . . . . . . queue XYZ to playlist
                 | playlist . . . . .  show items currently in playlist
                 | play . . . . . . . . . . . . . . . . . . play stream
@@ -105,10 +69,30 @@ while a!=5:
                 | help . . . . . . . . . . . . . . . this help message
                 | logout . . . . . . .  exit (if in socket connection)
                 | quit . . . . . . . . . . . . . . . . . . .  quit vlc"""
-        print(c)
-        cmd_v = input()
-        config_video(cmd_v)
 
-    if a == 5:
-        print("closing")
-        quit("quit")
+
+def audioplayer(cmd1,cmd2):
+    print("initializing telnetlib")
+
+    tn_player = telnetlib.Telnet("localhost", "4000")
+    player_dir = "add "+cmd1  # insert the path to video and the video name
+    command = ""+cmd2+""
+
+    if cmd1 == "":
+        print("cannot open")
+
+    else:
+        print("opening video")
+        tn_player.write(player_dir.encode() + "\n".encode())
+
+
+    if cmd2 == "":
+        print("the function is not valid")
+
+    else:
+        print("funtioning the command", cmd2)
+        tn_player.write(command.encode() + "\n".encode())
+
+
+audioplayer("F:\A1.mp4","")
+audioplayer("","pause")

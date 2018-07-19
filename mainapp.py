@@ -7,6 +7,7 @@ import time
 import random
 from Philips_Hue import test_flashing, Normal_Modes
 import userdb
+import braccio
 
 light_motion_id = '2'
 door_id = '3'
@@ -27,6 +28,7 @@ def distract(intervent, luminosity):
     # flashing
     mode = Normal_Modes.get_mode()
     test_flashing.light()
+    braccio.read()
     Normal_Modes.set_mode(mode)
 
 

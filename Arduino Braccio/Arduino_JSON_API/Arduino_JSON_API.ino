@@ -32,6 +32,7 @@ Servo wrist_rot;
 Servo gripper;
 
 // Name address for Raspberry Pi
+// Check the IP address of the server before starting
 IPAddress ip(169, 254, 0, 2);
 const char* server = "http://169.254.30.2:5000";
 

@@ -20,7 +20,7 @@ if __name__ == '__main__':
     all_the_lights = rest.send(url=lights_url)
     print(all_the_lights)
 
-if (all_the_lights) is dict:
+#if (all_the_lights) is dict:
     light_id = input()
     url_to_call = lights_url + light_id + '/state'
     body = '{ "on" : true, "hue" : 0 }'
